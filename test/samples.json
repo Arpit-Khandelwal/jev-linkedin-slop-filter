@@ -1,0 +1,34 @@
+[
+ {
+  "label": "HUMAN?",
+  "text": "Something I got wrong for years:\n\nI thought code review was about finding bugs.\n\nIt isn't. It's about spreading context.\n\nThe bugs you catch in review are the cheap ones. The expensive ones need tests.\n\nBut the knowledge transfer? That only happens in review.\n\nChanged how I review entirely."
+ },
+ {
+  "label": "HUMAN?",
+  "text": "Proud to share that our team just shipped the new payments dashboard after 8 months of work. Huge credit to the four engineers who carried this. It now handles 40k merchants and cut support tickets by about 30%. Genuinely the hardest thing I've worked on."
+ },
+ {
+  "label": "SLOP?",
+  "text": "Most engineering managers optimise for velocity. The good ones optimise for the half-life of a decision. If a choice takes two weeks to make and six months to reverse, you've mispriced the meeting. I've been thinking about this since a conversation with a colleague last month and haven't fully worked it out yet."
+ },
+ {
+  "label": "SLOP?",
+  "text": "We are excited to announce that Acme has been recognised as a Leader in the 2026 Gartner Magic Quadrant. This recognition reflects our relentless commitment to customer success and innovation. Thank you to our incredible team and our customers for making this possible. #Gartner #Leadership"
+ },
+ {
+  "label": "HUMAN?",
+  "text": "Layoffs hit our team yesterday. 12 people, some of whom I hired. I don't have a lesson or a takeaway. It was a bad day and I'm still processing it. If you're hiring for data engineering in Pune, DM me and I'll send you names of people who deserve better than this."
+ },
+ {
+  "label": "SLOP?",
+  "text": "Your network is your net worth.\n\nBut here's what nobody tells you:\n\nIt's not about who you know.\n\nIt's about who knows what you're good at.\n\nSpent 12 years learning this the hard way.\n\nWhat's your take? \ud83d\udc47"
+ },
+ {
+  "label": "CORP",
+  "text": "We are thrilled to announce our Series B! $40M led by Accel, with participation from our existing investors. This milestone is a testament to our team's relentless execution and our customers' trust. We're just getting started. #SeriesB #Startup #Growth"
+ },
+ {
+  "label": "CORP",
+  "text": "Acme is proud to be certified a Great Place to Work for the third year running. Our people are our greatest asset. Thank you to every single Acmer for making this culture what it is. We're hiring! #GPTW #Culture #Hiring"
+ }
+]

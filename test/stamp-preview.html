@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Stamp preview</title>
+<link rel="stylesheet" href="../extension/styles.css" />
+<style>
+  body { margin:0; padding:32px; background:#f4f2ee; font:15px/1.5 -apple-system,system-ui,sans-serif; }
+  .feed { max-width:560px; margin:0 auto; display:flex; flex-direction:column; gap:16px; }
+  .post { background:#fff; border-radius:10px; padding:16px 18px; box-shadow:0 1px 3px rgb(0 0 0/.12); }
+  .who { font-weight:600; font-size:14px; }
+  .when { color:#666; font-size:12px; margin-bottom:10px; }
+  .body { white-space:pre-line; }
+  button { position:fixed; top:16px; left:16px; padding:8px 14px; font-weight:700; cursor:pointer; }
+</style>
+</head>
+<body>
+<button onclick="location.reload()">Replay</button>
+<div class="feed">
+  <div class="post" id="p1"><div class="who">Arjun Mehta</div><div class="when">2h</div>
+    <div class="body">I fired my best engineer today.
+
+He was brilliant. Top 1% talent.
+
+But he refused to attend a single standup.
+
+Here's what I learned:
+
+1. Talent without humility is a liability
+2. Culture eats strategy for breakfast
+
+Agree?</div></div>
+  <div class="post" id="p2"><div class="who">Acme Corp</div><div class="when">1d</div>
+    <div class="body">We are thrilled to announce our Series B! $40M led by Accel. This milestone is a testament to our team's relentless execution. #SeriesB #Growth</div></div>
+  <div class="post" id="p3"><div class="who">Priya Nair</div><div class="when">4h</div>
+    <div class="body">Proud to share that our team shipped the payments dashboard after 8 months. It handles 40k merchants and cut support tickets ~30%.</div></div>
+</div>
+<script>
+const STAMPS={engagement_bait:'Bait',humblebrag:'Brag',corporate:'Corp'};
+function stamp(post,result){
+  const mark=document.createElement('div');
+  mark.className='slop-stamp'; mark.dataset.reason=result.reason;
+  const w=document.createElement('span'); w.className='slop-word'; w.textContent=STAMPS[result.reason]??'Slop';
+  const m=document.createElement('span'); m.className='slop-meta';
+  m.textContent=result.source==='local'?'rule':'jev '+result.score.toFixed(2);
+  mark.append(w,m);
+  const width=post.clientWidth||480;
+  const word=STAMPS[result.reason]??'Slop';
+  const tilt=-14+Math.random()*9;
+  const size=Math.min(76,Math.max(22,(width*0.74)/(word.length*0.68)));
+  mark.style.setProperty('--stamp-size',Math.round(size)+'px');
+  mark.style.setProperty('--stamp-tilt',tilt+'deg');
+  post.classList.add('slop-stamped'); post.appendChild(mark);
+  const rad=Math.abs(tilt)*(Math.PI/180);
+  const fp=mark.offsetWidth*Math.cos(rad)+mark.offsetHeight*Math.sin(rad);
+  const lim=width*0.8;
+  if(fp>lim) mark.style.setProperty('--stamp-size',Math.round(size*lim/fp)+'px');
+}
+setTimeout(()=>stamp(document.getElementById('p1'),{reason:'engagement_bait',score:0.94,source:'jev'}),500);
+setTimeout(()=>stamp(document.getElementById('p2'),{reason:'corporate',score:0.98,source:'jev'}),1100);
+setTimeout(()=>stamp(document.getElementById('p3'),{reason:'humblebrag',score:0.71,source:'jev'}),1700);
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <rect width="128" height="128" rx="26" fill="#fffcf6"/>
+  <g transform="rotate(-11 64 64)">
+    <rect x="16" y="40" width="96" height="48" rx="5"
+          fill="#fbe2e7" stroke="#d4183d" stroke-width="7"/>
+    <text x="64" y="74" text-anchor="middle"
+          font-family="Helvetica Neue, Arial Black, sans-serif"
+          font-size="33" font-weight="900" letter-spacing="1.5"
+          fill="#d4183d">SLOP</text>
+  </g>
+</svg>

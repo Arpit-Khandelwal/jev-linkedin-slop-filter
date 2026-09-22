@@ -1,0 +1,144 @@
+/* The stamp is the product: it has to land like a rubber stamp hitting paper.
+   Everything animates on transform and opacity only, so it stays on the
+   compositor while LinkedIn's own feed keeps scrolling underneath. */
+
+:root {
+  --slop-bait: #d4183d;
+  --slop-brag: #b45309;
+  --slop-corp: #1d4ed8;
+  --slop-ink: 0.97;
+  --slop-tilt: -11deg;
+  --slop-slam: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slop-stamped {
+  position: relative;
+  animation: slop-impact 360ms ease-out 150ms both;
+}
+
+.slop-stamp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12em;
+  padding: 0.28em 0.62em 0.34em;
+  pointer-events: none;
+  color: var(--slop-bait);
+  /* Tinted paper fill, not a wash: the post must stop reading through it. */
+  background: color-mix(in srgb, currentColor 13%, #fffcf6);
+  border: 0.14em solid currentColor;
+  border-radius: 0.1em;
+  box-shadow:
+    inset 0 0 0 0.035em currentColor,
+    0 0.1em 0.55em rgb(0 0 0 / 0.22);
+  font-family: "Helvetica Neue", "Arial Black", Inter, system-ui, sans-serif;
+  opacity: var(--slop-ink);
+  transform: translate(-50%, -50%) rotate(var(--stamp-tilt, var(--slop-tilt)));
+  animation: slop-slam 380ms var(--slop-slam) both;
+  /* Ragged ink edge — the stamp should not read as a clean CSS box. */
+  /* Speckle, not polka dots: fine gaps so the fill reads as worn ink. */
+  -webkit-mask-image: radial-gradient(circle at 9% 21%, transparent 0 1.1px, #000 1.1px),
+    radial-gradient(circle at 27% 88%, transparent 0 1px, #000 1px),
+    radial-gradient(circle at 54% 12%, transparent 0 1.3px, #000 1.3px),
+    radial-gradient(circle at 71% 71%, transparent 0 1px, #000 1px),
+    radial-gradient(circle at 91% 34%, transparent 0 1.2px, #000 1.2px);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Ink shock ring thrown off the moment the stamp bottoms out. */
+.slop-stamp::after {
+  content: "";
+  position: absolute;
+  inset: -7%;
+  border: 0.07em solid currentColor;
+  border-radius: 0.12em;
+  animation: slop-ring 420ms ease-out 190ms both;
+}
+
+.slop-stamp[data-reason="humblebrag"] { color: var(--slop-brag); }
+.slop-stamp[data-reason="corporate"]  { color: var(--slop-corp); }
+
+.slop-word {
+  /* Sized in JS against the post width so long words never overflow the card. */
+  font-size: var(--stamp-size, 44px);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.slop-meta {
+  font-size: max(9px, calc(var(--stamp-size, 44px) * 0.2));
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+@keyframes slop-slam {
+  0% {
+    transform: translate(-50%, -50%) rotate(-44deg) scale(5.2);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  40% { opacity: var(--slop-ink); }
+  68% {
+    transform: translate(-50%, -50%) rotate(calc(var(--stamp-tilt, var(--slop-tilt)) + 6deg)) scale(0.84);
+    filter: blur(0);
+  }
+  84% {
+    transform: translate(-50%, -50%) rotate(calc(var(--stamp-tilt, var(--slop-tilt)) - 2deg)) scale(1.06);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--stamp-tilt, var(--slop-tilt))) scale(1);
+    opacity: var(--slop-ink);
+    filter: blur(0);
+  }
+}
+
+@keyframes slop-ring {
+  0%   { transform: scale(0.94); opacity: 0.6; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+
+/* The page recoils a frame after the stamp lands. */
+@keyframes slop-impact {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  14%  { transform: translate3d(-10px, 3px, 0) rotate(-0.4deg); }
+  30%  { transform: translate3d(8px, -3px, 0) rotate(0.32deg); }
+  48%  { transform: translate3d(-5px, 2px, 0) rotate(-0.18deg); }
+  68%  { transform: translate3d(3px, -1px, 0) rotate(0.08deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+}
+
+.slop-pending { opacity: 0.6; transition: opacity 160ms ease-out; }
+
+.slop-counter {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 99999;
+  padding: 9px 15px;
+  border-radius: 999px;
+  background: #18181b;
+  color: #fafafa;
+  font: 700 12px/1 "Helvetica Neue", Inter, system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slop-stamped { animation: none; }
+  .slop-stamp { animation: slop-fade 200ms ease-out both; }
+  .slop-stamp::after { animation: none; opacity: 0; }
+  @keyframes slop-fade {
+    from { opacity: 0; }
+    to   { opacity: var(--slop-ink); }
+  }
+}

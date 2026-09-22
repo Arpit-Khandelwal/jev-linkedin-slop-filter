@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  :root {
+    --ink: #d4183d;
+    --paper: #fffcf6;
+    --bg: #131316;
+    --fg: #fafafa;
+    --muted: #8b8b93;
+  }
+  * { box-sizing: border-box; }
+  body {
+    width: 248px;
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 13px/1.45 "Helvetica Neue", Inter, system-ui, sans-serif;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid #27272b;
+  }
+  .mark {
+    display: grid;
+    place-items: center;
+    width: 30px; height: 22px;
+    transform: rotate(-11deg);
+    border: 2px solid var(--ink);
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--ink) 13%, var(--paper));
+    color: var(--ink);
+    font-size: 8px; font-weight: 900; letter-spacing: .5px;
+  }
+  h1 { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .01em; }
+  .sub { margin: 0; font-size: 10.5px; color: var(--muted); }
+
+  .row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+  }
+  .row + .row { border-top: 1px solid #27272b; }
+  .row label { cursor: pointer; font-weight: 600; }
+
+  .switch { position: relative; width: 38px; height: 21px; flex: none; }
+  .switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .track {
+    position: absolute; inset: 0; border-radius: 999px; background: #3a3a41;
+    transition: background 180ms cubic-bezier(.16,1,.3,1);
+  }
+  .track::after {
+    content: ""; position: absolute; top: 3px; left: 3px;
+    width: 15px; height: 15px; border-radius: 50%; background: var(--paper);
+    transition: transform 200ms cubic-bezier(.16,1,.3,1);
+  }
+  .switch input:checked + .track { background: var(--ink); }
+  .switch input:checked + .track::after { transform: translateX(17px); }
+  .switch input:focus-visible + .track { outline: 2px solid var(--paper); outline-offset: 2px; }
+
+  .stat { text-align: right; }
+  .num { font-size: 19px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1; }
+  .cap { font-size: 10px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+
+  footer {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 16px 13px; border-top: 1px solid #27272b;
+    font-size: 11px; color: var(--muted);
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #52525b; flex: none; }
+  .dot[data-live="yes"] { background: #22c55e; }
+  .dot[data-live="no"]  { background: #ef4444; }
+  code { color: #d4d4d8; font-size: 10.5px; }
+</style>
+</head>
+<body>
+  <header>
+    <span class="mark">SLOP</span>
+    <span>
+      <h1>Slop Filter</h1>
+      <p class="sub">LinkedIn, judged by Jev</p>
+    </span>
+  </header>
+
+  <div class="row">
+    <label for="enabled">Stamp the feed</label>
+    <span class="switch">
+      <input type="checkbox" id="enabled" />
+      <span class="track"></span>
+    </span>
+  </div>
+
+  <div class="row">
+    <span class="cap">Judged</span>
+    <span class="stat">
+      <span class="num" id="judged">—</span>
+      <span class="cap" id="split"></span>
+    </span>
+  </div>
+
+  <footer>
+    <span class="dot" id="dot"></span>
+    <span id="status">checking proxy…</span>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>
