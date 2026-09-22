@@ -41,6 +41,18 @@ const QUESTIONS = {
   },
 };
 
+/**
+ * The stamp face comes from which judgment crossed its threshold, not from the
+ * category. A corporate post can be categorised `genuine_update` and still be
+ * brand marketing, which is why the category alone produced generic stamps.
+ */
+const labelFor = ({ slop, corporate, category }) => {
+  if (corporate >= THRESHOLDS.corporate) return 'Corp';
+  if (category === 'humblebrag') return 'Brag';
+  if (slop >= THRESHOLDS.slop) return 'Bait';
+  return 'Slop';
+};
+
 export class JevError extends Error {}
 
 export const judge = async (postText, apiKey) => {
@@ -69,11 +81,14 @@ export const judge = async (postText, apiKey) => {
   const verdict =
     slop >= THRESHOLDS.slop || corporate >= THRESHOLDS.corporate ? 'hide' : 'show';
 
+  const category = answers.category.choice;
+
   return {
     verdict,
     slop,
     corporate,
-    reason: answers.category.choice,
+    label: labelFor({ slop, corporate, category }),
+    reason: category,
     confidence: answers.category.confidence,
     source: 'jev',
   };

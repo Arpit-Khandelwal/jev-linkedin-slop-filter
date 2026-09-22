@@ -36,10 +36,10 @@ export const prefilter = (rawText) => {
   const shortLines = countShortLines(rawText);
 
   if (baitHits >= 2 && shortLines >= 4) {
-    return { verdict: 'hide', reason: 'engagement_bait', source: 'local' };
+    return { verdict: 'hide', label: 'Bait', reason: 'engagement_bait', source: 'local' };
   }
   if (corpHits >= 2) {
-    return { verdict: 'hide', reason: 'corporate', source: 'local' };
+    return { verdict: 'hide', label: 'Corp', reason: 'corporate', source: 'local' };
   }
   if (rawText.length < MAX_SAFE_LENGTH && baitHits === 0 && corpHits === 0 && shortLines <= 2) {
     return { verdict: 'show', reason: 'short_and_plain', source: 'local' };

@@ -20,13 +20,7 @@ const TEXT_CANDIDATES = 'p, span[dir], div[dir], div, span';
 const WRAPPER_RATIO = 0.95;
 const MAX_TEXT_LENGTH = 3000;
 
-// Stamp faces. Short words hit harder than accurate ones.
-const STAMPS = {
-  engagement_bait: 'Bait',
-  humblebrag: 'Brag',
-  corporate: 'Corp',
-  short_and_plain: 'Slop',
-};
+// The stamp face is decided server-side, where the thresholds live.
 
 const seen = new WeakSet();
 const queue = [];
@@ -72,7 +66,7 @@ const renderCounter = () => {
 };
 
 const stamp = (post, result) => {
-  const word = STAMPS[result.reason] ?? 'Slop';
+  const word = result.label ?? 'Slop';
   const score = Math.max(result.slop ?? 0, result.corporate ?? 0);
 
   const mark = document.createElement('div');
