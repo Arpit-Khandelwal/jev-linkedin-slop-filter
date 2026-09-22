@@ -8,8 +8,7 @@ Decisions come from [Jev](https://typesafe.ai), TypeSafe's System One model. It
 returns a typed probability instead of text, so the extension branches on a
 number rather than parsing prose.
 
-<!-- Drop a demo.gif in docs/ and it renders here: -->
-<!-- ![demo](docs/demo.gif) -->
+![Jev stamping the LinkedIn feed live](docs/demo.gif)
 
 ## Run it
 
